@@ -1,0 +1,32 @@
+'''
+COURSE:        CS-550 Artificial Intelligence
+SECTION:       01-MW 4:00-5:15pm
+DATE:          15 April 2020
+ASSIGNMENT:    05
+@author Mariano Hernandez & Brandon Castor
+DESCRIPTION:
+    
+'''
+
+from csp_lib.sudoku import (Sudoku, easy1, harder1)
+from constraint_prop import AC3
+from csp_lib.backtrack_util import mrv
+from backtrack import backtracking_search
+import queue
+
+for puzzle in [easy1, harder1]:
+    s = Sudoku(puzzle)  # construct a Sudoku problem
+    s.display(s.infer_assignment()) #display unsolved puzzle
+    #initialize backtrack search -> returns T/F
+    constraints_satisfied = AC3(s)
+    if constraints_satisfied is True:
+        solved = backtracking_search(csp=s, select_unassigned_variable=mrv, inference=mac)
+        if solved is not None:
+            print("solved puzzle")
+            s.display(s.infer_assignment())#display solved puzzle
+        else:
+            print("no solution")
+    else:
+        s.display(s.infer_assignment())
+
+
